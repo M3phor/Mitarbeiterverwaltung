@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace Mitarbeiterverwaltung.Services
 {
-    public class MitarbeiterService
+    public class MitarbeiterService(string connectionString)
     {
-        private readonly DAOConnector databaseObject;
-
-        public MitarbeiterService(string connectionString)
-        {
-            databaseObject = new DAOConnector(connectionString);
-        }
+        private readonly DAOConnector databaseObject = new DAOConnector(connectionString);
 
         // Service Funktion: Alle Mitarbeiter anzeigen
         public List<Mitarbeiter> GetAllMitarbeiter()

@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mitarbeiterverwaltung"
         mc:Ignorable="d"
-        Title="Mitarbeiterverwaltung" Height="525" Width="850">
+        Title="Mitarbeiterverwaltung" Height="550" Width="850">
     <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
@@ -45,14 +46,16 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
-        <Label Name="label_mitarbeiterverwaltung" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Mitarbeiterverwaltung" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button Name="btn_mitarbeiteranzeigen" Grid.Row="2" Grid.Column="1" Content="Mitarbeiter anzeigen" Click="Button_ShowAllMitarbeiter_Click"/>
-        <Button Name="btn_abteilungenanzeigen" Grid.Row="2" Grid.Column="3" Content="Abteilungen anzeigen"/>
-        <Button Name="btn_parkanzeigen" Grid.Row="2" Grid.Column="5" Content="Parkplätze anzeigen"/>
-        <Button Name="btn_addmitarbeiter" Grid.Row="2" Grid.Column="9" Content="Mitarbeiter hinzufügen"  Click="Button_Window_AddMitarbeiter_Click"/>
-        <Label Name="label_aktuelletabelle" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Content="Aktuelle Tabelle: " HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Name="label_tabelle" Grid.Row="3" Grid.Column="3"  Content="Tabelle" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <DataGrid Name="MainDataGrid" Grid.Row="5" Grid.RowSpan="12" Grid.ColumnSpan="9" Grid.Column="1" />
-        <Button Name="btn_export" Grid.Row="18" Grid.Column="9" Content="Tabelle exportieren"/>
+        <Label Name="label_mitarbeiterverwaltung" Grid.Row="1" Grid.Column="1" Content="Mitarbeiterverwaltung"/>
+        <Button Name="btn_mitarbeiteranzeigen" Grid.Row="2" Grid.Column="1" Content="Mitarbeiter anzeigen" Click="btn_MitarbeiterAnzeigen_Click"/>
+        <Button Name="btn_abteilungenanzeigen" Grid.Row="2" Grid.Column="3" Content="Abteilungen anzeigen" Click="btn_AbteilungenAnzeigen_Click"/>
+        <Button Name="btn_parkanzeigen" Grid.Row="2" Grid.Column="5" Content="Parkplätze anzeigen" Click="btn_parkanzeigen_Click"/>
+        <Button Name="btn_addmitarbeiter" Grid.Row="2" Grid.Column="9" Content="Mitarbeiter hinzufügen" Click="btn_Window_AddMitarbeiter_Click"/>
+        <Button Name="btn_editmitarbeiter" Grid.Row="3" Grid.Column="9" Content="Mitarbeiter bearbeiten" Click="btn_EditMitarbeiter_Click" />
+        <Button Name="btn_delmitarbeiter" Grid.Row="4" Grid.Column="9" Content="Mitarbeiter löschen" Click="btn_DelMitarbeiter_Click"  />
+        <Label Name="label_aktuelletabelle" Grid.Row="5" Grid.Column="1" Content="Aktuelle Tabelle: "/>
+        <Label Name="label_tabelle" Grid.Row="5" Grid.Column="3"  Content="Tabelle"/>
+        <DataGrid Name="MainDataGrid" Grid.Row="6" Grid.RowSpan="12" Grid.ColumnSpan="9" Grid.Column="1" />
+        <Button Name="btn_export" Grid.Row="19" Grid.Column="9" Content="Tabelle exportieren" Click="btn_Export_Click"/>
     </Grid>
 </Window>

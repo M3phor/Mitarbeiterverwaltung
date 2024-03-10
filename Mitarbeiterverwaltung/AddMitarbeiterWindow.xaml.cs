@@ -30,7 +30,6 @@ namespace Mitarbeiterverwaltung
             mitarbeiterService = new MitarbeiterService(connectionString);
         }
 
-        // Button Mitarbeiter hinzufügen
         // ToDo: Errorhandling falls unerwartete Eingaben (Bsp. Text als Abteilung)
         private void Button_AddMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
@@ -60,5 +59,6 @@ namespace Mitarbeiterverwaltung
             // Führe Servicefunktion Addmitarbeiter aus
             mitarbeiterService.AddMitarbeiter(mitarbeiter);
         }
+    
     }
 }

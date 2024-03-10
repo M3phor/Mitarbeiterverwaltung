@@ -114,7 +114,6 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             }
         }
 
-        // AddMitarbeiter(string Vorname, string Nachname, dateTime Geburtstag, Abteilung, Parkplatz)
         public void AddMitarbeiter(Mitarbeiter mitarbeiter) 
         {
             try
@@ -148,17 +147,46 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
         // DAO-Methoden für Abteilungen
 
-        //GetAbteilungById
+        //ToDo: GetAbteilungById
 
-        //GetAllAbteilungen
+        public List<Abteilung> GetAllAbteilungen()
+        {
+            List<Abteilung> abteilungList = new List<Abteilung>();
 
+            try
+            {
+                connection.Open();
+                string query = "SELECT * FROM abteilung";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Abteilung abteilung = new Abteilung();
+
+                    abteilung.Id = reader.GetInt32("Id");
+                    abteilung.Name = reader.GetString("Name");
+                    abteilung.Kostenstelle = reader.GetInt32("Kostenstelle");
+
+                    abteilungList.Add(abteilung);
+                }
+                connection.Close();
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+
+            return abteilungList;
+        }
 
 
         // Funktionen für Parkplätze
 
-        //GetParkplatzById
+        //ToDo: GetParkplatzById
 
-        //GetAllParkplatz
+        //ToDo: GetAllParkplatz
 
 
     }
