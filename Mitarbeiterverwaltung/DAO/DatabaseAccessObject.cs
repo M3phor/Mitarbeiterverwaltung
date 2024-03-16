@@ -1,12 +1,10 @@
 ﻿using Mitarbeiterverwaltung.Objects;
 using MySql.Data.MySqlClient;
-using Mysqlx.Crud;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using Newtonsoft.Json;
+using Formatting = Newtonsoft.Json.Formatting;
+using System.IO;
+using System.Data;
 
 namespace Mitarbeiterverwaltung.DatabaseAccessObject
 {
@@ -41,14 +39,21 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
                         mitarbeiter.Vorname = reader.GetString("Vorname");
                         mitarbeiter.Nachname = reader.GetString("Nachname");
                         mitarbeiter.Geburtstag = reader.GetDateTime("Geburtstag");
-                        mitarbeiter.Abteilung = reader.GetInt32("AbteilungId");
-                        mitarbeiter.ParkplatzNr = reader.GetInt32("ParkplatzId");
+                        mitarbeiter.Abteilung = reader.GetInt32("Abteilung");
+                        mitarbeiter.ParkplatzNr = reader.GetInt32("ParkplatzNr");
                     }
-                    connection.Close();
+                    
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
+                }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open) 
+                    {
+                        connection.Close();
+                    } 
                 }
             return mitarbeiter;
         }
@@ -85,12 +90,18 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
                     mitarbeiterList.Add(mitarbeiter);
                 }
-                connection.Close();
             }
 
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
             }
 
             return mitarbeiterList;
@@ -105,12 +116,18 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Id", id);
                 command.ExecuteNonQuery();
-                connection.Close();
             }
 
             catch(Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
             }
         }
 
@@ -134,16 +151,99 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
                 command.Parameters.AddWithValue("@Abteilung", mitarbeiter.Abteilung);
                 command.Parameters.AddWithValue("@ParkplatzNr", mitarbeiter.ParkplatzNr);
                 command.ExecuteNonQuery();
-                connection.Close();
             }
 
             catch( Exception ex )
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
         }
 
+        public void ExportMitarbeiter()
+        {
+            //List, weil deren Größe (im gegensatz zum Array) dynamisch angepasst werden kann, zudem Methoden wie .Add(), .Remove() etc.
+            List<object> exporteddata = new List<object>();
+            string query = "SELECT mitarbeiter.personalnummer as personalnummer, mitarbeiter.vorname, mitarbeiter.nachname, mitarbeiter.geburtstag, abteilung.name as abteilung, abteilung.kostenstelle, parkplatz.parkplatznr, parkplatz.schatten as parkplatzschatten, parkplatz.stockwerk as parkplatzstockwerk from mitarbeiter LEFT JOIN abteilung on mitarbeiter.abteilung = abteilung.id LEFT JOIN parkplatz on mitarbeiter.parkplatznr = parkplatz.parkplatznr";
+            
+            // ToDo: Path dynmaisch anpassen
+            string path = "C:\\Users\\UCD3FE\\Export\\";
+            string filename = $"db_export_{DateTime.Now:yyyyMMdd}.json";
 
+            try
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(query, connection);
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    //string weil die keys strings sind; object weil die values verschiedene Datentypen sind, so können alle abgebildet werden
+                    var rowData = new Dictionary<string, object>();
+
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        rowData[reader.GetName(i)] = reader.GetValue(i);
+                    }
+
+                    exporteddata.Add(rowData);
+                }
+
+                string jsondata = JsonConvert.SerializeObject(exporteddata, Formatting.Indented);
+                File.WriteAllText(path + filename, jsondata);
+
+                Console.WriteLine("daten wurden erfolgreich als json exportiert.");
+                MessageBox.Show($"alle Mitarbeiterdaten wurden als {filename} exportiert nach: {path}");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+        public void EditMitarbeiter(Mitarbeiter mitarbeiter) 
+        {
+            try 
+            {
+                connection.Open();
+                string query = "UPDATE mitarbeiter SET Vorname = @Vorname, Nachname = @Nachname, Abteilung = @Abteilung, ParkplatzNr = @ParkplatzNr WHERE Personalnummer = @Personalnummer";
+                MySqlCommand command = new MySqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@Vorname", mitarbeiter.Vorname);
+                command.Parameters.AddWithValue("@Nachname", mitarbeiter.Nachname);
+                command.Parameters.AddWithValue("@Abteilung", mitarbeiter.Abteilung);
+                command.Parameters.AddWithValue("@ParkplatzNr", mitarbeiter.ParkplatzNr);
+                command.Parameters.AddWithValue("@Personalnummer", mitarbeiter.Personalnummer);
+                command.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+    
 
         // DAO-Methoden für Abteilungen
 
@@ -170,12 +270,18 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
                     abteilungList.Add(abteilung);
                 }
-                connection.Close();
             }
 
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
             }
 
             return abteilungList;

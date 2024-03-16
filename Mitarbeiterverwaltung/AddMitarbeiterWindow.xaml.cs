@@ -16,18 +16,14 @@ using System.Windows.Shapes;
 
 namespace Mitarbeiterverwaltung
 {
-    /// <summary>
-    /// Interaktionslogik für AddMitarbeiterWindow.xaml
-    /// </summary>
     public partial class AddMitarbeiterWindow : Window
     {
         private MitarbeiterService mitarbeiterService;
-        private string connectionString = "Server=localhost;Database=mitarbeiterverwaltung;username=root;password=;";
-
-        public AddMitarbeiterWindow()
+ 
+        public AddMitarbeiterWindow(MitarbeiterService mitarbeiterService)
         {
             InitializeComponent();
-            mitarbeiterService = new MitarbeiterService(connectionString);
+            this.mitarbeiterService = mitarbeiterService;
         }
 
         // ToDo: Errorhandling falls unerwartete Eingaben (Bsp. Text als Abteilung)
@@ -58,6 +54,11 @@ namespace Mitarbeiterverwaltung
 
             // Führe Servicefunktion Addmitarbeiter aus
             mitarbeiterService.AddMitarbeiter(mitarbeiter);
+
+            MessageBox.Show($"Mitarbeiter {vorname} {nachname} wurde erfolgreich erstellt!");
+            this.Close();
+
+            //ToDo: Tabelle beim Schließen aktualisieren
         }
     
     }

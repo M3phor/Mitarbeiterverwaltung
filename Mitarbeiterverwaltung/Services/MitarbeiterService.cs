@@ -1,5 +1,6 @@
 ﻿using Mitarbeiterverwaltung.DatabaseAccessObject;
 using Mitarbeiterverwaltung.Objects;
+using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Mitarbeiterverwaltung.Services
         }
 
         // Service Funktion: Einzelnen Mitarbeiter anzeigen
-        public Mitarbeiter GetMitarbeiter(int id)
+        public Mitarbeiter GetMitarbeiterById(int id)
         {
             return databaseObject.GetMitarbeiterById(id);
         }
@@ -36,6 +37,17 @@ namespace Mitarbeiterverwaltung.Services
             databaseObject.AddMitarbeiter(mitarbeiter);
         }
 
+        // Service Funktion: Mitarbeiter exportieren
+        public void ExportMitarbeiter() 
+        {
+            databaseObject.ExportMitarbeiter();
+        }
+
+        // Service Funktion: Mitarbeiter bearbeiten
+        public void EditMitarbeiter(Mitarbeiter mitarbeiter)
+        {
+            databaseObject.EditMitarbeiter(mitarbeiter);
+        }
 
     }
 

@@ -15,16 +15,13 @@ using System.Windows.Shapes;
 
 namespace Mitarbeiterverwaltung
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private MitarbeiterService mitarbeiterService;
         private AbteilungService abteilungService;
-        private string connectionString = "Server=localhost;Database=mitarbeiterverwaltung;username=root;password=;";
+        public string connectionString;
 
-        public MainWindow()
+        public MainWindow(string connectionString)
         {
             InitializeComponent();
             mitarbeiterService = new MitarbeiterService(connectionString);
@@ -45,7 +42,7 @@ namespace Mitarbeiterverwaltung
         private void btn_AbteilungenAnzeigen_Click(object sender, RoutedEventArgs e)
         {
             List<Abteilung> abteilungList = abteilungService.GetAllAbteilungen();
-            MainDataGrid.ItemsSource= abteilungList;
+            MainDataGrid.ItemsSource = abteilungList;
             label_tabelle.Content = "Abteilungen";
         }
 
@@ -57,24 +54,28 @@ namespace Mitarbeiterverwaltung
 
         private void btn_Window_AddMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
-            AddMitarbeiterWindow addMitarbeiterWindow = new AddMitarbeiterWindow();
+            AddMitarbeiterWindow addMitarbeiterWindow = new AddMitarbeiterWindow(mitarbeiterService);
             addMitarbeiterWindow.Owner = this;
             addMitarbeiterWindow.ShowDialog();
         }
 
         private void btn_EditMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
-            //ToDo
+            EditMitarbeiterWindow editMitarbeiterWindow = new EditMitarbeiterWindow(mitarbeiterService);
+            editMitarbeiterWindow.Owner = this;
+            editMitarbeiterWindow.ShowDialog();
         }
 
-        private void btn_DelMitarbeiter_Click(object sender, RoutedEventArgs e)
+        private void btn_Window_DelMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
-            //ToDo
+            DelMitarbeiterWindow delMitarbeiterWindow = new DelMitarbeiterWindow(mitarbeiterService);
+            delMitarbeiterWindow.Owner = this;
+            delMitarbeiterWindow.ShowDialog();
         }
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            //ToDo
+            mitarbeiterService.ExportMitarbeiter();
         }
     }
 }

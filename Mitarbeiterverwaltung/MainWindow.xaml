@@ -52,7 +52,7 @@
         <Button Name="btn_parkanzeigen" Grid.Row="2" Grid.Column="5" Content="Parkplätze anzeigen" Click="btn_parkanzeigen_Click"/>
         <Button Name="btn_addmitarbeiter" Grid.Row="2" Grid.Column="9" Content="Mitarbeiter hinzufügen" Click="btn_Window_AddMitarbeiter_Click"/>
         <Button Name="btn_editmitarbeiter" Grid.Row="3" Grid.Column="9" Content="Mitarbeiter bearbeiten" Click="btn_EditMitarbeiter_Click" />
-        <Button Name="btn_delmitarbeiter" Grid.Row="4" Grid.Column="9" Content="Mitarbeiter löschen" Click="btn_DelMitarbeiter_Click"  />
+        <Button Name="btn_delmitarbeiter" Grid.Row="4" Grid.Column="9" Content="Mitarbeiter löschen" Click="btn_Window_DelMitarbeiter_Click"  />
         <Label Name="label_aktuelletabelle" Grid.Row="5" Grid.Column="1" Content="Aktuelle Tabelle: "/>
         <Label Name="label_tabelle" Grid.Row="5" Grid.Column="3"  Content="Tabelle"/>
         <DataGrid Name="MainDataGrid" Grid.Row="6" Grid.RowSpan="12" Grid.ColumnSpan="9" Grid.Column="1" />
