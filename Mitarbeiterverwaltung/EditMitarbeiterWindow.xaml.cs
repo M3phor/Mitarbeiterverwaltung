@@ -16,18 +16,21 @@ using System.Windows.Shapes;
 
 namespace Mitarbeiterverwaltung
 {
-    /// <summary>
-    /// Interaction logic for EditMitarbeiterWindow.xaml
-    /// </summary>
     public partial class EditMitarbeiterWindow : Window
     {
         private MitarbeiterService mitarbeiterService;
-        public Mitarbeiter mitarbeiter;
+        private AbteilungService abteilungService;
+        private Mitarbeiter mitarbeiter;
+        private bool isTxtboxAbteilungsnameEnabled;
 
-        public EditMitarbeiterWindow(MitarbeiterService mitarbeiterService)
+
+
+        public EditMitarbeiterWindow(MitarbeiterService mitarbeiterService, AbteilungService abteilungService)
         {
             InitializeComponent();
             this.mitarbeiterService = mitarbeiterService;
+            this.abteilungService = abteilungService;
+            isTxtboxAbteilungsnameEnabled = false;
         }
 
         private void Button_EditMitarbeiter_Click(object sender, RoutedEventArgs e)
@@ -70,7 +73,7 @@ namespace Mitarbeiterverwaltung
             }
             else
             {
-                checkFlag = false;
+                mitarbeiter.ParkplatzNr = null;
             }
 
             if (checkFlag) 
@@ -92,10 +95,14 @@ namespace Mitarbeiterverwaltung
             if (int.TryParse(txtbox_personalnr.Text, out int parsedPersonalNr))
             {
                 mitarbeiter = mitarbeiterService.GetMitarbeiterById(parsedPersonalNr);
+                Abteilung abteilung = abteilungService.GetAbteilungById(parsedPersonalNr);
                 
                 // Falls Mitarberiter gefunden
                 if (mitarbeiter.Vorname != null && mitarbeiter.Nachname != null) 
                 {
+                    //Aktiviere Abteilungsnamenabgleich
+                    isTxtboxAbteilungsnameEnabled = true;
+
                     // Textboxen mit Inhalt füllen
                     txtbox_vorname.Text = mitarbeiter.Vorname;
                     txtbox_nachname.Text = mitarbeiter.Nachname;
@@ -114,6 +121,44 @@ namespace Mitarbeiterverwaltung
                 else 
                 {
                     MessageBox.Show($"Mitarbeiter mit Personalnummer {parsedPersonalNr} nicht gefunden!");
+                }
+            }
+            // Falls Personalnummer kein Integer
+            else
+            {
+                MessageBox.Show("Ungültige Eingabe!");
+            }
+        }
+
+        private void Txtbox_abteilung_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (isTxtboxAbteilungsnameEnabled)
+            {
+                if (int.TryParse(txtbox_abteilung.Text, out int parsedAbteilung))
+                {
+                    Abteilung abteilung = abteilungService.GetAbteilungById(parsedAbteilung);
+                    if (abteilung.Name != null)
+                    {
+                        txtbox_abteilungsname.Text = abteilung.Name;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Abteilung mit Id {parsedAbteilung} nicht gefunden!");
+                        txtbox_abteilung.Text = mitarbeiter.Abteilung.ToString();
+                    }
+                }
+                
+                else
+                {
+                    if (string.IsNullOrEmpty(txtbox_abteilung.Text))
+                    {
+                        txtbox_abteilungsname.Text = "";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ungültige Eingabe!");
+                        txtbox_abteilung.Text = mitarbeiter.Abteilung.ToString();
+                    }
                 }
             }
         }

@@ -40,6 +40,7 @@ namespace Mitarbeiterverwaltung
                     if(mitarbeiter.Personalnummer == parsedPersonalNr)
                     {
                         mitarbeiterGefunden = true;
+                        break;
                     }
                 }
                 if (mitarbeiterGefunden )

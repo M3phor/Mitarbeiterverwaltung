@@ -16,5 +16,10 @@ namespace Mitarbeiterverwaltung.Services
         {
             return databaseObject.GetAllAbteilungen();
         }
+
+        public Abteilung GetAbteilungById(int id) 
+        {
+            return databaseObject.GetAbteilungById(id);
+        }
     }
 }

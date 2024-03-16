@@ -26,17 +26,19 @@ namespace Mitarbeiterverwaltung
             InitializeComponent();
             mitarbeiterService = new MitarbeiterService(connectionString);
             abteilungService = new AbteilungService(connectionString);
-            List<Mitarbeiter> mitarbeiterList = mitarbeiterService.GetAllMitarbeiter();
-            MainDataGrid.ItemsSource = mitarbeiterList;
-            label_tabelle.Content = "Mitarbeiter";
-
+            loadDataGridMitarbeiter();
         }
 
-        private void btn_MitarbeiterAnzeigen_Click(object sender, RoutedEventArgs e)
+        public void loadDataGridMitarbeiter() 
         {
             List<Mitarbeiter> mitarbeiterList = mitarbeiterService.GetAllMitarbeiter();
             MainDataGrid.ItemsSource = mitarbeiterList;
             label_tabelle.Content = "Mitarbeiter";
+        }
+
+        private void btn_MitarbeiterAnzeigen_Click(object sender, RoutedEventArgs e)
+        {
+            loadDataGridMitarbeiter();
         }
 
         private void btn_AbteilungenAnzeigen_Click(object sender, RoutedEventArgs e)
@@ -57,13 +59,15 @@ namespace Mitarbeiterverwaltung
             AddMitarbeiterWindow addMitarbeiterWindow = new AddMitarbeiterWindow(mitarbeiterService);
             addMitarbeiterWindow.Owner = this;
             addMitarbeiterWindow.ShowDialog();
+            loadDataGridMitarbeiter();
         }
 
         private void btn_EditMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
-            EditMitarbeiterWindow editMitarbeiterWindow = new EditMitarbeiterWindow(mitarbeiterService);
+            EditMitarbeiterWindow editMitarbeiterWindow = new EditMitarbeiterWindow(mitarbeiterService, abteilungService);
             editMitarbeiterWindow.Owner = this;
             editMitarbeiterWindow.ShowDialog();
+            loadDataGridMitarbeiter();
         }
 
         private void btn_Window_DelMitarbeiter_Click(object sender, RoutedEventArgs e)
@@ -71,6 +75,7 @@ namespace Mitarbeiterverwaltung
             DelMitarbeiterWindow delMitarbeiterWindow = new DelMitarbeiterWindow(mitarbeiterService);
             delMitarbeiterWindow.Owner = this;
             delMitarbeiterWindow.ShowDialog();
+            loadDataGridMitarbeiter();
         }
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Formatting = Newtonsoft.Json.Formatting;
 using System.IO;
 using System.Data;
+using Org.BouncyCastle.Asn1.Mozilla;
 
 namespace Mitarbeiterverwaltung.DatabaseAccessObject
 {
@@ -248,6 +249,39 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
         // DAO-Methoden für Abteilungen
 
         //ToDo: GetAbteilungById
+        public Abteilung GetAbteilungById(int id)
+        {
+            Abteilung abteilung = new Abteilung();
+
+            try
+            {
+                connection.Open();
+                string query = "SELECT * FROM abteilung WHERE Id = @Id";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    abteilung.Id = reader.GetInt32("Id");
+                    abteilung.Name = reader.GetString("Name");
+                    abteilung.Kostenstelle = reader.GetInt32("Kostenstelle");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+
+            return abteilung;
+        }
 
         public List<Abteilung> GetAllAbteilungen()
         {

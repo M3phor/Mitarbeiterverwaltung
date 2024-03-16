@@ -57,9 +57,6 @@ namespace Mitarbeiterverwaltung
 
             MessageBox.Show($"Mitarbeiter {vorname} {nachname} wurde erfolgreich erstellt!");
             this.Close();
-
-            //ToDo: Tabelle beim Schließen aktualisieren
         }
-    
     }
 }
