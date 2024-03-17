@@ -1,11 +1,5 @@
 ﻿using Mitarbeiterverwaltung.DatabaseAccessObject;
 using Mitarbeiterverwaltung.Objects;
-using MySqlX.XDevAPI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mitarbeiterverwaltung.Services
 {
@@ -26,7 +20,7 @@ namespace Mitarbeiterverwaltung.Services
         }
 
         // Service Funktion: Mitarbeiter löschen
-        public void DelMitarbeiterById(int id) 
+        public void DelMitarbeiterById(int id)
         {
             databaseObject.DelMitarbeiterById(id);
         }
@@ -38,7 +32,7 @@ namespace Mitarbeiterverwaltung.Services
         }
 
         // Service Funktion: Mitarbeiter exportieren
-        public void ExportMitarbeiter() 
+        public void ExportMitarbeiter()
         {
             databaseObject.ExportMitarbeiter();
         }

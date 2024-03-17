@@ -1,26 +1,14 @@
 ﻿using Mitarbeiterverwaltung.Objects;
 using Mitarbeiterverwaltung.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Mitarbeiterverwaltung
 {
     public partial class AddMitarbeiterWindow : Window
     {
         private MitarbeiterService mitarbeiterService;
-        
- 
+
+
         public AddMitarbeiterWindow(MitarbeiterService mitarbeiterService)
         {
             InitializeComponent();
@@ -41,7 +29,7 @@ namespace Mitarbeiterverwaltung
             // Überprüft ob linker Ausdruck = null, falls ja, verwende DateTime.MinValue
             mitarbeiter.Geburtstag = datepicker_geburtstag.SelectedDate ?? DateTime.MinValue;
 
-            
+
             // Textbox Parkplatznr nicht null oder leer
             if (!string.IsNullOrEmpty(txtbox_parkplatznr.Text))
             {
@@ -76,7 +64,7 @@ namespace Mitarbeiterverwaltung
                 checkFlag = false;
             }
 
-            if(checkFlag)
+            if (checkFlag)
             {
                 mitarbeiterService.AddMitarbeiter(mitarbeiter);
                 MessageBox.Show($"Mitarbeiter {mitarbeiter.Vorname} {mitarbeiter.Nachname} wurde erfolgreich erstellt!");

@@ -1,10 +1,5 @@
 ﻿using Mitarbeiterverwaltung.DatabaseAccessObject;
 using Mitarbeiterverwaltung.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mitarbeiterverwaltung.Services
 {
@@ -17,7 +12,7 @@ namespace Mitarbeiterverwaltung.Services
             return databaseObject.GetAllAbteilungen();
         }
 
-        public Abteilung GetAbteilungById(int id) 
+        public Abteilung GetAbteilungById(int id)
         {
             return databaseObject.GetAbteilungById(id);
         }

@@ -1,17 +1,6 @@
-﻿using Mitarbeiterverwaltung.DatabaseAccessObject;
-using Mitarbeiterverwaltung.Objects;
+﻿using Mitarbeiterverwaltung.Objects;
 using Mitarbeiterverwaltung.Services;
-using System.Configuration;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Mitarbeiterverwaltung
 {
@@ -24,14 +13,14 @@ namespace Mitarbeiterverwaltung
         public MainWindow(string connectionString, string username)
         {
             InitializeComponent();
-            label_aktuelleruser.Content = username;
+            label_username.Content = username;
             mitarbeiterService = new MitarbeiterService(connectionString);
             abteilungService = new AbteilungService(connectionString);
             parkplatzService = new ParkplatzService(connectionString);
             loadDataGridMitarbeiter();
         }
 
-        public void loadDataGridMitarbeiter() 
+        public void loadDataGridMitarbeiter()
         {
             List<Mitarbeiter> mitarbeiterList = mitarbeiterService.GetAllMitarbeiter();
             MainDataGrid.ItemsSource = mitarbeiterList;

@@ -1,18 +1,7 @@
 ﻿using Mitarbeiterverwaltung.Objects;
 using Mitarbeiterverwaltung.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Mitarbeiterverwaltung
 {
@@ -38,7 +27,7 @@ namespace Mitarbeiterverwaltung
             bool checkFlag = true;
             mitarbeiter.Vorname = txtbox_vorname.Text;
             mitarbeiter.Nachname = txtbox_nachname.Text;
-            
+
             // Überprüfe Eingabe Abteilung
             if (!string.IsNullOrEmpty(txtbox_abteilung.Text))
             {
@@ -52,7 +41,7 @@ namespace Mitarbeiterverwaltung
                     checkFlag = false;
                 }
             }
-            else 
+            else
             {
                 checkFlag = false;
             }
@@ -76,7 +65,7 @@ namespace Mitarbeiterverwaltung
                 mitarbeiter.ParkplatzNr = null;
             }
 
-            if (checkFlag) 
+            if (checkFlag)
             {
                 mitarbeiterService.EditMitarbeiter(mitarbeiter);
                 MessageBox.Show($"Der Mitarbeiter {mitarbeiter.Vorname} {mitarbeiter.Nachname} mit Personalnummer {mitarbeiter.Personalnummer} wurde erfolgreich bearbeitet!");
@@ -96,9 +85,9 @@ namespace Mitarbeiterverwaltung
             {
                 mitarbeiter = mitarbeiterService.GetMitarbeiterById(parsedPersonalNr);
                 Abteilung abteilung = abteilungService.GetAbteilungById(parsedPersonalNr);
-                
+
                 // Falls Mitarberiter gefunden
-                if (mitarbeiter.Vorname != null && mitarbeiter.Nachname != null) 
+                if (mitarbeiter.Vorname != null && mitarbeiter.Nachname != null)
                 {
                     //Aktiviere Abteilungsnamenabgleich
                     isTxtboxAbteilungsnameEnabled = true;
@@ -118,7 +107,7 @@ namespace Mitarbeiterverwaltung
                     Button_EditMitarbeiter.IsEnabled = true;
                 }
                 // Falls kein Mitarbeiter gefunden
-                else 
+                else
                 {
                     MessageBox.Show($"Mitarbeiter mit Personalnummer {parsedPersonalNr} nicht gefunden!");
                 }
@@ -147,7 +136,7 @@ namespace Mitarbeiterverwaltung
                         txtbox_abteilung.Text = mitarbeiter.Abteilung.ToString();
                     }
                 }
-                
+
                 else
                 {
                     if (string.IsNullOrEmpty(txtbox_abteilung.Text))

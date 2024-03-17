@@ -1,22 +1,5 @@
-﻿using Mitarbeiterverwaltung.Services;
-using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Asn1.Mozilla;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MySql.Data.MySqlClient;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Mitarbeiterverwaltung
 {
@@ -35,7 +18,7 @@ namespace Mitarbeiterverwaltung
 
         private void Button_Login_Click(object sender, RoutedEventArgs e)
         {
-            
+
             // Falls Benutzereingabe valide
             if (LoginCheck())
             {
@@ -59,7 +42,7 @@ namespace Mitarbeiterverwaltung
             password = PasswordBox_Passwort.Password;
 
             // Versuche mit den gegebenen Informationen eine Verbindung zu öffnen, falls erfolgreich -> true
-            try 
+            try
             {
                 connectionString = $"Server=localhost;Database=mitarbeiterverwaltung;username={username};password={password};";
                 MySqlConnection connection = new MySqlConnection(connectionString);
@@ -73,7 +56,7 @@ namespace Mitarbeiterverwaltung
             catch
             {
                 return false;
-            }   
+            }
         }
     }
 }

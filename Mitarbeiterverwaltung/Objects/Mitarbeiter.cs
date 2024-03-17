@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mitarbeiterverwaltung.Objects
+﻿namespace Mitarbeiterverwaltung.Objects
 {
     public class Mitarbeiter
     {
@@ -15,7 +9,8 @@ namespace Mitarbeiterverwaltung.Objects
         public int? Abteilung { get; set; }
         public int? ParkplatzNr { get; set; }
 
-        public Mitarbeiter() {
+        public Mitarbeiter()
+        {
             this.Vorname = null;
             this.Nachname = null;
             this.Geburtstag = new DateTime();

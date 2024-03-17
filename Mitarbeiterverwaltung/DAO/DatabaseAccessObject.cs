@@ -1,9 +1,9 @@
 ﻿using Mitarbeiterverwaltung.Objects;
 using MySql.Data.MySqlClient;
-using System.Windows;
-using System.IO;
-using System.Data;
 using Newtonsoft.Json;
+using System.Data;
+using System.IO;
+using System.Windows;
 using Formatting = Newtonsoft.Json.Formatting;
 
 
@@ -26,36 +26,36 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
         public Mitarbeiter GetMitarbeiterById(int id)
         {
             Mitarbeiter mitarbeiter = new Mitarbeiter();
-            
-                try
+
+            try
+            {
+                connection.Open();
+                string query = "SELECT * FROM mitarbeiter WHERE Personalnummer = @Id";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
                 {
-                    connection.Open();
-                    string query = "SELECT * FROM mitarbeiter WHERE Personalnummer = @Id";
-                    MySqlCommand command = new MySqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@Id", id);
-                    MySqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        mitarbeiter.Personalnummer = reader.GetInt32("Personalnummer");
-                        mitarbeiter.Vorname = reader.GetString("Vorname");
-                        mitarbeiter.Nachname = reader.GetString("Nachname");
-                        mitarbeiter.Geburtstag = reader.GetDateTime("Geburtstag");
-                        mitarbeiter.Abteilung = reader.GetInt32("Abteilung");
-                        mitarbeiter.ParkplatzNr = reader.GetInt32("ParkplatzNr");
-                    }
-                    
+                    mitarbeiter.Personalnummer = reader.GetInt32("Personalnummer");
+                    mitarbeiter.Vorname = reader.GetString("Vorname");
+                    mitarbeiter.Nachname = reader.GetString("Nachname");
+                    mitarbeiter.Geburtstag = reader.GetDateTime("Geburtstag");
+                    mitarbeiter.Abteilung = reader.GetInt32("Abteilung");
+                    mitarbeiter.ParkplatzNr = reader.GetInt32("ParkplatzNr");
                 }
-                catch (Exception ex)
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
+                    connection.Close();
                 }
-                finally 
-                {
-                    if (connection.State == ConnectionState.Open) 
-                    {
-                        connection.Close();
-                    } 
-                }
+            }
             return mitarbeiter;
         }
 
@@ -109,7 +109,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
         public void DelMitarbeiterById(int id)
         {
-            try 
+            try
             {
                 connection.Open();
                 string query = "DELETE FROM mitarbeiter WHERE Personalnummer = @Id";
@@ -118,7 +118,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
                 command.ExecuteNonQuery();
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
@@ -131,7 +131,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             }
         }
 
-        public void AddMitarbeiter(Mitarbeiter mitarbeiter) 
+        public void AddMitarbeiter(Mitarbeiter mitarbeiter)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
                 command.Parameters.AddWithValue("@ParkplatzNr", mitarbeiter.ParkplatzNr);
                 command.ExecuteNonQuery();
             }
-            catch( Exception ex )
+            catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
@@ -168,7 +168,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
         {
             //List, weil deren Größe (im gegensatz zum Array) dynamisch angepasst werden kann, zudem Methoden wie .Add(), .Remove() etc.
             List<object> exporteddata = new List<object>();
-            
+
             // ToDo: Path dynmaisch anpassen
             string path = "C:\\Users\\UCD3FE\\Export\\";
             string filename = $"db_export_{DateTime.Now:yyyyMMdd}.json";
@@ -214,9 +214,9 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             }
         }
 
-        public void EditMitarbeiter(Mitarbeiter mitarbeiter) 
+        public void EditMitarbeiter(Mitarbeiter mitarbeiter)
         {
-            try 
+            try
             {
                 connection.Open();
                 string query = "UPDATE mitarbeiter SET Vorname = @Vorname, Nachname = @Nachname, Abteilung = @Abteilung, ParkplatzNr = @ParkplatzNr WHERE Personalnummer = @Personalnummer";
@@ -242,7 +242,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
                 }
             }
         }
-    
+
         // DAO-Methoden für Abteilungen
 
         public Abteilung GetAbteilungById(int id)
