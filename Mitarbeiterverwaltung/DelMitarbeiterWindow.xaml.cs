@@ -8,12 +8,23 @@ namespace Mitarbeiterverwaltung
     {
         private MitarbeiterService mitarbeiterService;
 
+        /// <summary>
+        /// Konstruktor der DelMitarbeiterWindow Klasse.
+        /// Initialisiert die Benutzeroberfläche des DelMitarbeiterWindow-Fensters.
+        /// </summary>
+        /// <param name="mitarbeiterService">Ein Objekt des Typs MitarbeiterService, das für die Kommunikation mit der Datenbank für Mitarbeiter zuständig ist.</param>
         public DelMitarbeiterWindow(MitarbeiterService mitarbeiterService)
         {
             InitializeComponent();
             this.mitarbeiterService = mitarbeiterService;
         }
-        // Bei Klick auf Button Mitarbeiter Löschen
+        /// <summary>
+        /// Ereignishandler für den Klick auf den Button zum Löschen des Mitarbeiters.
+        /// Überprüft die eingegeben Daten und suche den dazugehörigen Mitarbeiter.
+        /// Falls gefunden, öffnet ein neues Fenster zur Bestätigung der Löschung
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_DelMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
             bool foundMitarbeiter = false;

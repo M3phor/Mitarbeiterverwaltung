@@ -10,19 +10,28 @@ namespace Mitarbeiterverwaltung
         private string password;
         private string connectionString;
 
-
+        /// <summary>
+        /// Konstruktor der LoginWindow Klasse.
+        /// Initialisiert die Benutzeroberfläche des Login-Fensters.
+        /// </summary>
         public LoginWindow()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Ereignishandler für den Klick auf den Login-Button.
+        /// Überprüft die eingegebenen Anmeldeinformationen mithilfe der LoginCheck()-Methode.
+        /// Öffnet das Hauptfenster, wenn die Anmeldeinformationen gültig sind, andernfalls wird eine Fehlermeldung angezeigt.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Login_Click(object sender, RoutedEventArgs e)
         {
 
             // Falls Benutzereingabe valide
             if (LoginCheck())
             {
-                // Öffne das Hauptfenster und übergebe den ConnectionString
+                // Öffne das Hauptfenster und übergebe ConnectionString und Username
                 MainWindow mainWindow = new MainWindow(connectionString, username);
                 mainWindow.Show();
 
@@ -35,7 +44,11 @@ namespace Mitarbeiterverwaltung
                 MessageBox.Show("Ungültige Anmeldeinformationen");
             }
         }
-        // Überprüfe die Anmeldeinformationen und gib true oder false zurück je nachdem, ob die Anmeldeinformationen gültig sind oder nicht
+        /// <summary>
+        /// Methode zur Überprüfung der Gültigkeit der eingegebenen Anmeldeinformationen,
+        /// indem versucht wird, eine Verbindung zur Datenbank herzustellen.
+        /// </summary>
+        /// <returns>Ein Bool, welcher der Gültigkeit der eingegebenen Anmeldeinformationen beschreibt</returns>
         private bool LoginCheck()
         {
             username = txtbox_User.Text;

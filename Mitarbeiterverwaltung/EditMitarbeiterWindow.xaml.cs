@@ -12,8 +12,12 @@ namespace Mitarbeiterverwaltung
         private Mitarbeiter mitarbeiter;
         private bool isTxtboxAbteilungsnameEnabled;
 
-
-
+        /// <summary>
+        /// Konstruktor der EditMitarbeiterWindow-Klasse.
+        /// Initialisiert das Fenster und die zugehörigen Service-Objekte.
+        /// </summary>
+        /// <param name="mitarbeiterService">Ein Objekt des Typs MitarbeiterService, das für die Kommunikation mit der Datenbank für Mitarbeiter zuständig ist.</param>
+        /// <param name="abteilungService">Ein Objekt des Typs AbteilungService, das für die Kommunikation mit der Datenbank für Abteilungen zuständig ist.</param>
         public EditMitarbeiterWindow(MitarbeiterService mitarbeiterService, AbteilungService abteilungService)
         {
             InitializeComponent();
@@ -21,7 +25,12 @@ namespace Mitarbeiterverwaltung
             this.abteilungService = abteilungService;
             isTxtboxAbteilungsnameEnabled = false;
         }
-
+        /// <summary>
+        /// Ereignishandler für den Klick auf den Button zum Speichern von Änderungen.
+        /// Überprüft die eingegebenen Daten und führt die Bearbeitung des Mitarbeiters durch.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_EditMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
             bool checkFlag = true;
@@ -45,7 +54,6 @@ namespace Mitarbeiterverwaltung
             {
                 checkFlag = false;
             }
-
 
             // Überprüfe Eingabe Parkplatznr
             if (!string.IsNullOrEmpty(txtbox_parkplatznr.Text))
@@ -76,10 +84,15 @@ namespace Mitarbeiterverwaltung
                 MessageBox.Show("Überprüfen Sie die Eingabe");
             }
         }
-
+        /// <summary>
+        /// Ereignishandler für den Klick auf den Button zum Suchen eines Mitarbeiters.
+        /// Ruft die Informationen des Mitarbeiters basierend auf der eingegebenen Personalnummer ab.
+        /// Füllt die Textboxen mit den Daten.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_GetMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
-
             // Versuche Eingabe als Integer zu parsen
             if (int.TryParse(txtbox_personalnr.Text, out int parsedPersonalNr))
             {
@@ -118,7 +131,12 @@ namespace Mitarbeiterverwaltung
                 MessageBox.Show("Ungültige Eingabe!");
             }
         }
-
+        /// <summary>
+        /// Ereignishandler, der ausgelöst wird, wenn sich der Inhalt der Abteilungs-Textbox ändert.
+        /// Aktualisiert den Namen der Abteilung, wenn eine gültige Abteilungsnummer eingegeben wird.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Txtbox_abteilung_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (isTxtboxAbteilungsnameEnabled)

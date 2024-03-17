@@ -6,15 +6,15 @@
         public string Vorname { get; set; }
         public string Nachname { get; set; }
         public DateTime Geburtstag { get; set; }
-        public int? Abteilung { get; set; }
+        public int Abteilung { get; set; }
         public int? ParkplatzNr { get; set; }
 
         public Mitarbeiter()
         {
-            this.Vorname = null;
-            this.Nachname = null;
+            this.Vorname = "";
+            this.Nachname = "";
             this.Geburtstag = new DateTime();
-            this.Abteilung = null;
+            this.Abteilung = 0;
             this.ParkplatzNr = null;
         }
     }

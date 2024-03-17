@@ -28,6 +28,4 @@
         <TextBox Grid.Row="4" Grid.Column="2" Text="..." Name="txtbox_DelMitarbeiter"/>
         <Button Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Name="Button_DelMitarbeiter" Content="Mitarbeiter löschen" Click="Button_DelMitarbeiter_Click"/>
     </Grid>
-
-
 </Window>
