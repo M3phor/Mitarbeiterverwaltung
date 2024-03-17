@@ -19,13 +19,15 @@ namespace Mitarbeiterverwaltung
     {
         private MitarbeiterService mitarbeiterService;
         private AbteilungService abteilungService;
-        public string connectionString;
+        private ParkplatzService parkplatzService;
 
-        public MainWindow(string connectionString)
+        public MainWindow(string connectionString, string username)
         {
             InitializeComponent();
+            label_aktuelleruser.Content = username;
             mitarbeiterService = new MitarbeiterService(connectionString);
             abteilungService = new AbteilungService(connectionString);
+            parkplatzService = new ParkplatzService(connectionString);
             loadDataGridMitarbeiter();
         }
 
@@ -50,7 +52,8 @@ namespace Mitarbeiterverwaltung
 
         private void btn_parkanzeigen_Click(object sender, RoutedEventArgs e)
         {
-            //ToDo
+            List<Parkplatz> parkplatzList = parkplatzService.GetAllParkplaetze();
+            MainDataGrid.ItemsSource = parkplatzList;
             label_tabelle.Content = "Parkplätze";
         }
 
@@ -81,6 +84,42 @@ namespace Mitarbeiterverwaltung
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
             mitarbeiterService.ExportMitarbeiter();
+        }
+
+        private void btn_ExportAnzeigen_Click(object sender, RoutedEventArgs e)
+        {
+            List<Mitarbeiter> mitarbeiterList = mitarbeiterService.GetAllMitarbeiter();
+            List<MitarbeiterGesamt> mitarbeiterGesamtList = new List<MitarbeiterGesamt>();
+
+            foreach (Mitarbeiter mitarbeiter in mitarbeiterList)
+            {
+                MitarbeiterGesamt mitarbeiterGesamt = new MitarbeiterGesamt();
+                Abteilung abteilung = abteilungService.GetAbteilungById(mitarbeiter.Personalnummer);
+
+                mitarbeiterGesamt.Personalnummer = mitarbeiter.Personalnummer;
+                mitarbeiterGesamt.Vorname = mitarbeiter.Vorname;
+                mitarbeiterGesamt.Nachname = mitarbeiter.Nachname;
+                mitarbeiterGesamt.Geburtstag = mitarbeiter.Geburtstag;
+                mitarbeiterGesamt.Abteilung = mitarbeiter.Abteilung;
+                mitarbeiterGesamt.Abteilungsname = abteilung.Name;
+                mitarbeiterGesamt.Kostenstelle = abteilung.Kostenstelle;
+                mitarbeiterGesamt.ParkplatzNr = mitarbeiter.ParkplatzNr;
+                if (mitarbeiter.ParkplatzNr != null)
+                {
+                    Parkplatz parkplatz = parkplatzService.GetParkplatzById(mitarbeiter.ParkplatzNr);
+                    mitarbeiterGesamt.Schatten = parkplatz.Schatten;
+                    mitarbeiterGesamt.Stockwerk = parkplatz.Stockwerk;
+
+                }
+
+
+
+
+
+                mitarbeiterGesamtList.Add(mitarbeiterGesamt);
+            }
+            MainDataGrid.ItemsSource = mitarbeiterGesamtList;
+            label_tabelle.Content = "Export Tabelle";
         }
     }
 }

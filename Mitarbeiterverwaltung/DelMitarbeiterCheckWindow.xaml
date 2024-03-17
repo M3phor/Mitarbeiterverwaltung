@@ -1,0 +1,39 @@
+﻿<Window x:Class="Mitarbeiterverwaltung.DelMitarbeiterCheckWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mitarbeiterverwaltung"
+        mc:Ignorable="d"
+        Title="DelMitarbeiterCheckWindow" Height="225" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="110"/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="110"/>
+            <ColumnDefinition Width="105"/>
+        </Grid.ColumnDefinitions>
+
+        
+        <TextBlock   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="2"><Run Text="Um die Löschung zu bestätigen, bitte den "/><LineBreak/><Run Text="Vor- und Nachnamen der zu löschenden"/><LineBreak/><Run Text="Person eingeben!"/></TextBlock>
+        <Label   Grid.Row="4" Grid.Column="1" Content="Vor- /Nachname:"/>
+        <Label Grid.Row="4" Grid.Column="3" Content="..." Name="Label_DelMitarbeiterName"/>
+        <Label   Grid.Row="6" Grid.Column="1" Content="Eingabe:"/>
+        <TextBox   Grid.Row="6" Grid.Column="3" Text="" Name="txtbox_DelMitarbeiterName" TextChanged="txtbox_DelMitarbeiterName_TextChanged"/>
+        <Button Grid.Row="8" Grid.Column="1" Name="Button_DelMitarbeiterBestätigen" Content="Bestätigen" Click="Button_DelMitarbeiter_Click" IsEnabled="False"/>
+        <Button Grid.Row="8" Grid.Column="3" Name="Button_DelMitarbeiterAbbrechen" Content="Abbrechen" Click="Button_CancelDelMitarbeiter_Click" />
+    </Grid>
+</Window>

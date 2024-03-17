@@ -19,6 +19,7 @@ namespace Mitarbeiterverwaltung
     public partial class AddMitarbeiterWindow : Window
     {
         private MitarbeiterService mitarbeiterService;
+        
  
         public AddMitarbeiterWindow(MitarbeiterService mitarbeiterService)
         {
@@ -26,37 +27,61 @@ namespace Mitarbeiterverwaltung
             this.mitarbeiterService = mitarbeiterService;
         }
 
-        // ToDo: Errorhandling falls unerwartete Eingaben (Bsp. Text als Abteilung)
         private void Button_AddMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
-            string vorname = txtbox_vorname.Text;
-            string nachname = txtbox_nachname.Text;
+            // ToDo: Eingabefehler abfangen:    - Namen?
+            //                                  - Geburtstag
+
+            Mitarbeiter mitarbeiter = new Mitarbeiter();
+            bool checkFlag = true;
+
+            mitarbeiter.Vorname = txtbox_vorname.Text;
+            mitarbeiter.Nachname = txtbox_nachname.Text;
 
             // Überprüft ob linker Ausdruck = null, falls ja, verwende DateTime.MinValue
-            DateTime geburtstag = datepicker_geburtstag.SelectedDate ?? DateTime.MinValue;
+            mitarbeiter.Geburtstag = datepicker_geburtstag.SelectedDate ?? DateTime.MinValue;
 
-            // TODO: Eingabefehler abfangen
-            int abteilung = Convert.ToInt32(txtbox_abteilung.Text);
-
-            int? parkplatzNr = null;
+            
             // Textbox Parkplatznr nicht null oder leer
             if (!string.IsNullOrEmpty(txtbox_parkplatznr.Text))
             {
                 // Versuche Textbox Parkplatznr zu int zu konvertieren
                 if (int.TryParse(txtbox_parkplatznr.Text, out int parsedParkplatzNr))
                 {
-                    parkplatzNr = parsedParkplatzNr;
+                    mitarbeiter.ParkplatzNr = parsedParkplatzNr;
+                }
+                else
+                {
+                    MessageBox.Show("Ungültige Eingabe bei Parkplatz. Es wird kein Input oder eine Ganzzahl erwartet!");
+                    checkFlag = false;
                 }
             }
 
-            // Erstelle Objekt Mitarbeiter mit eingelesenen Daten
-            Mitarbeiter mitarbeiter = new Mitarbeiter(vorname, nachname, geburtstag, abteilung, parkplatzNr);
+            // Textbox Abteilung nicht null oder leer
+            if (!string.IsNullOrEmpty(txtbox_abteilung.Text))
+            {
+                if (int.TryParse(txtbox_abteilung.Text, out int abteilung))
+                {
+                    mitarbeiter.Abteilung = abteilung;
+                }
+                else
+                {
+                    MessageBox.Show("Ungültige Eingabe bei Abteilung. Es wird eine Ganzzahl erwartet!");
+                    checkFlag = false;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ungültige Eingabe bei Abteilung. Das Feld darf nicht leer sein!");
+                checkFlag = false;
+            }
 
-            // Führe Servicefunktion Addmitarbeiter aus
-            mitarbeiterService.AddMitarbeiter(mitarbeiter);
-
-            MessageBox.Show($"Mitarbeiter {vorname} {nachname} wurde erfolgreich erstellt!");
-            this.Close();
+            if(checkFlag)
+            {
+                mitarbeiterService.AddMitarbeiter(mitarbeiter);
+                MessageBox.Show($"Mitarbeiter {mitarbeiter.Vorname} {mitarbeiter.Nachname} wurde erfolgreich erstellt!");
+                this.Close();
+            }
         }
     }
 }

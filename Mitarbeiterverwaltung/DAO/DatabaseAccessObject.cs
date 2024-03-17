@@ -1,11 +1,11 @@
 ﻿using Mitarbeiterverwaltung.Objects;
 using MySql.Data.MySqlClient;
 using System.Windows;
-using Newtonsoft.Json;
-using Formatting = Newtonsoft.Json.Formatting;
 using System.IO;
 using System.Data;
-using Org.BouncyCastle.Asn1.Mozilla;
+using Newtonsoft.Json;
+using Formatting = Newtonsoft.Json.Formatting;
+
 
 namespace Mitarbeiterverwaltung.DatabaseAccessObject
 {
@@ -92,7 +92,6 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
                     mitarbeiterList.Add(mitarbeiter);
                 }
             }
-
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
@@ -136,7 +135,6 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
         {
             try
             {
-                
                 connection.Open();
                 string query = "INSERT INTO mitarbeiter (Vorname, Nachname, Geburtstag, Abteilung, ParkplatzNr) VALUES (@Vorname, @Nachname, @Geburtstag, @Abteilung, @ParkplatzNr)";
                 int year = mitarbeiter.Geburtstag.Year;
@@ -153,7 +151,6 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
                 command.Parameters.AddWithValue("@ParkplatzNr", mitarbeiter.ParkplatzNr);
                 command.ExecuteNonQuery();
             }
-
             catch( Exception ex )
             {
                 Console.WriteLine("Error: " + ex.Message);
@@ -171,7 +168,6 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
         {
             //List, weil deren Größe (im gegensatz zum Array) dynamisch angepasst werden kann, zudem Methoden wie .Add(), .Remove() etc.
             List<object> exporteddata = new List<object>();
-            string query = "SELECT mitarbeiter.personalnummer as personalnummer, mitarbeiter.vorname, mitarbeiter.nachname, mitarbeiter.geburtstag, abteilung.name as abteilung, abteilung.kostenstelle, parkplatz.parkplatznr, parkplatz.schatten as parkplatzschatten, parkplatz.stockwerk as parkplatzstockwerk from mitarbeiter LEFT JOIN abteilung on mitarbeiter.abteilung = abteilung.id LEFT JOIN parkplatz on mitarbeiter.parkplatznr = parkplatz.parkplatznr";
             
             // ToDo: Path dynmaisch anpassen
             string path = "C:\\Users\\UCD3FE\\Export\\";
@@ -179,7 +175,9 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
             try
             {
+
                 connection.Open();
+                string query = "SELECT mitarbeiter.personalnummer as personalnummer, mitarbeiter.vorname, mitarbeiter.nachname, mitarbeiter.geburtstag, abteilung.name as abteilung, abteilung.kostenstelle, parkplatz.parkplatznr, parkplatz.schatten as parkplatzschatten, parkplatz.stockwerk as parkplatzstockwerk from mitarbeiter LEFT JOIN abteilung on mitarbeiter.abteilung = abteilung.id LEFT JOIN parkplatz on mitarbeiter.parkplatznr = parkplatz.parkplatznr";
                 MySqlCommand command = new MySqlCommand(query, connection);
                 var reader = command.ExecuteReader();
 
@@ -245,10 +243,8 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             }
         }
     
-
         // DAO-Methoden für Abteilungen
 
-        //ToDo: GetAbteilungById
         public Abteilung GetAbteilungById(int id)
         {
             Abteilung abteilung = new Abteilung();
@@ -321,16 +317,79 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             return abteilungList;
         }
 
-
         // Funktionen für Parkplätze
 
-        //ToDo: GetParkplatzById
+        public List<Parkplatz> GetAllParkplaetze()
+        {
+            List<Parkplatz> parkplatzList = new List<Parkplatz>();
 
-        //ToDo: GetAllParkplatz
+            try
+            {
+                connection.Open();
+                string query = "SELECT * FROM parkplatz";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
 
+                while (reader.Read())
+                {
+                    Parkplatz parkplatz = new Parkplatz();
 
+                    parkplatz.ParkplatzNr = reader.GetInt32("ParkplatzNr");
+                    parkplatz.Schatten = reader.GetBoolean("Schatten");
+                    parkplatz.Stockwerk = reader.GetInt32("Stockwerk");
+
+                    parkplatzList.Add(parkplatz);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+
+            return parkplatzList;
+        }
+
+        public Parkplatz GetParkplatzById(int? id)
+        {
+            Parkplatz parkplatz = new Parkplatz();
+
+            try
+            {
+                connection.Open();
+                string query = "SELECT * FROM parkplatz WHERE parkplatzNr = @parkplatzNr";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@parkplatzNr", id);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    parkplatz.ParkplatzNr = reader.GetInt32("parkplatzNr");
+                    parkplatz.Schatten = reader.GetBoolean("Schatten");
+                    parkplatz.Stockwerk = reader.GetInt32("Stockwerk");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+
+            return parkplatz;
+        }
     }
-
-
 }
 

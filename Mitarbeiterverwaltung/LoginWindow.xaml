@@ -26,9 +26,9 @@
 
         <TextBlock   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"><Run Text="Geben Sie einen Loginnamen "/><LineBreak/><Run Text="und Passwort ein!"/></TextBlock>
         <Label   Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Content="Loginname:"/>
-        <TextBox Grid.Row="3" Grid.Column="2" Text="..." Name="txtbox_User"/>
+        <TextBox Grid.Row="3" Grid.Column="2" Text="" Name="txtbox_User"/>
         <Label   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Content="Passwort:"/>
-        <TextBox Grid.Row="4" Grid.Column="2" Text="..." Name="txtbox_Passwort"/>
+        <PasswordBox Grid.Row="4" Grid.Column="2" Name="PasswordBox_Passwort"/>
         <Button Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Name="btn_login" Content="Login" Click="Button_Login_Click"/>
     </Grid>
 

@@ -6,21 +6,17 @@ using System.Threading.Tasks;
 
 namespace Mitarbeiterverwaltung.Objects
 {
-    public class Mitarbeiter
+    public class MitarbeiterGesamt
     {
         public int Personalnummer { get; set; }
         public string Vorname { get; set; }
         public string Nachname { get; set; }
         public DateTime Geburtstag { get; set; }
         public int? Abteilung { get; set; }
+        public string Abteilungsname { get; set; }
+        public int Kostenstelle { get; set; }
         public int? ParkplatzNr { get; set; }
-
-        public Mitarbeiter() {
-            this.Vorname = null;
-            this.Nachname = null;
-            this.Geburtstag = new DateTime();
-            this.Abteilung = null;
-            this.ParkplatzNr = null;
-        }
+        public bool Schatten { get; set; }
+        public int? Stockwerk { get; set; }
     }
 }

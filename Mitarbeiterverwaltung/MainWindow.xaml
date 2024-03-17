@@ -33,15 +33,15 @@
             
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="130"/>
-            <ColumnDefinition Width="130"/>
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="130"/>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="130"/>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="130"/>
             <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="25"/>
             <ColumnDefinition Width="130"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
@@ -50,9 +50,12 @@
         <Button Name="btn_mitarbeiteranzeigen" Grid.Row="2" Grid.Column="1" Content="Mitarbeiter anzeigen" Click="btn_MitarbeiterAnzeigen_Click"/>
         <Button Name="btn_abteilungenanzeigen" Grid.Row="2" Grid.Column="3" Content="Abteilungen anzeigen" Click="btn_AbteilungenAnzeigen_Click"/>
         <Button Name="btn_parkanzeigen" Grid.Row="2" Grid.Column="5" Content="Parkplätze anzeigen" Click="btn_parkanzeigen_Click"/>
+        <Button Name="btn_exportanzeigen" Grid.Row="2" Grid.Column="7" Content="Exporttabelle anzeigen" Click="btn_ExportAnzeigen_Click"/>
         <Button Name="btn_addmitarbeiter" Grid.Row="2" Grid.Column="9" Content="Mitarbeiter hinzufügen" Click="btn_Window_AddMitarbeiter_Click"/>
         <Button Name="btn_editmitarbeiter" Grid.Row="3" Grid.Column="9" Content="Mitarbeiter bearbeiten" Click="btn_EditMitarbeiter_Click" />
         <Button Name="btn_delmitarbeiter" Grid.Row="4" Grid.Column="9" Content="Mitarbeiter löschen" Click="btn_Window_DelMitarbeiter_Click"  />
+        <Label Name="label_aktuelleruser" Grid.Row="4" Grid.Column="1" Content="Username: "/>
+        <Label Name="label_username" Grid.Row="4" Grid.Column="3"  Content="Username"/>
         <Label Name="label_aktuelletabelle" Grid.Row="5" Grid.Column="1" Content="Aktuelle Tabelle: "/>
         <Label Name="label_tabelle" Grid.Row="5" Grid.Column="3"  Content="Tabelle"/>
         <DataGrid Name="MainDataGrid" Grid.Row="6" Grid.RowSpan="12" Grid.ColumnSpan="9" Grid.Column="1" />

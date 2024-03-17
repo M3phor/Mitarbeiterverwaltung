@@ -40,11 +40,11 @@ namespace Mitarbeiterverwaltung
             if (LoginCheck())
             {
                 // Öffne das Hauptfenster und übergebe den ConnectionString
-                MainWindow mainWindow = new MainWindow(connectionString);
+                MainWindow mainWindow = new MainWindow(connectionString, username);
                 mainWindow.Show();
 
                 // Schließe das Login-Fenster
-                this.Close();
+                Close();
             }
             else
             {
@@ -56,7 +56,7 @@ namespace Mitarbeiterverwaltung
         private bool LoginCheck()
         {
             username = txtbox_User.Text;
-            password = txtbox_Passwort.Text;
+            password = PasswordBox_Passwort.Password;
 
             // Versuche mit den gegebenen Informationen eine Verbindung zu öffnen, falls erfolgreich -> true
             try 

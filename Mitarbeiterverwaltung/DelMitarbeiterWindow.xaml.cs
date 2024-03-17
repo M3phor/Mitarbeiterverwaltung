@@ -25,42 +25,39 @@ namespace Mitarbeiterverwaltung
             InitializeComponent();
             this.mitarbeiterService = mitarbeiterService;
         }
-
+        // Bei Klick auf Button Mitarbeiter Löschen
         private void Button_DelMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
+            bool foundMitarbeiter = false;
+
             // Versuche Eingabe als Integer zu parsen
             if (int.TryParse(txtbox_DelMitarbeiter.Text, out int parsedPersonalNr)) 
             {
                 List<Mitarbeiter> mitarbeiterList = mitarbeiterService.GetAllMitarbeiter();
-                bool mitarbeiterGefunden = false;
 
                 // Vergleiche Eingabe mit existierenden Mitarbeitern
                 foreach(Mitarbeiter mitarbeiter in mitarbeiterList)
                 {
+                    // Falls gefunden, öffne Bestätigungsfenster
                     if(mitarbeiter.Personalnummer == parsedPersonalNr)
                     {
-                        mitarbeiterGefunden = true;
+                        foundMitarbeiter = true;
+                        DelMitarbeiterCheckWindow delMitarbeiterCheckWindow = new DelMitarbeiterCheckWindow(mitarbeiterService, mitarbeiter);
+                        delMitarbeiterCheckWindow.Owner = this;
+                        delMitarbeiterCheckWindow.ShowDialog();
                         break;
                     }
                 }
-                if (mitarbeiterGefunden )
-                {
-                    // ToDo: SICHERUNG
-
-                    mitarbeiterService.DelMitarbeiterById(parsedPersonalNr);
-                    MessageBox.Show($"Mitarbeiter mit Personalnummer {parsedPersonalNr} erfolgreich gelöscht!");
-                    this.Close();
-                }
-                else
+                // Falls nicht gefunden, Fehlermeldung
+                if (!foundMitarbeiter)
                 {
                     MessageBox.Show($"Kein Mitarbeiter mit Personalnummer {parsedPersonalNr} gefunden!");
                 }
-                // Lösche Mitarbeiter mit übergebener Personalnummer
             }
-            // Fehlermeldung
+            // Falls kein Integer, Fehlermeldung
             else
             {
-                MessageBox.Show($"Ungültige Eingabe");
+                MessageBox.Show($"Ungültige Eingabe. Es wird eine Ganzzahl erwartet!");
             }   
         }
     }
