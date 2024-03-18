@@ -40,8 +40,7 @@
         <Label   Grid.Row="5" Grid.Column="1" Content="Geburtstag" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <DatePicker Grid.Row="5" Grid.Column="2" Name="datepicker_geburtstag" IsEnabled="False"/>
         <Label   Grid.Row="6" Grid.Column="1" Content="Abteilung" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="6" Grid.Column="2" Text="..." Name="txtbox_abteilung" IsReadOnly="True" TextChanged="Txtbox_abteilung_TextChanged"/>
-        <TextBox Grid.Row="6" Grid.Column="4" Text="..." Name="txtbox_abteilungsname" IsReadOnly="True"/>
+        <ComboBox Grid.Row="6" Grid.Column="2" Name="combobox_abteilung" IsEnabled="False"/>
         <Label   Grid.Row="7" Grid.Column="1" Content="Parkplatznummer" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <TextBox Grid.Row="7" Grid.Column="2" Text="..." Name="txtbox_parkplatznr" IsReadOnly="True"/>
         <Button Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Name="Button_EditMitarbeiter" Content="Änderungen speichern" Click="Button_EditMitarbeiter_Click" IsEnabled="False"/>

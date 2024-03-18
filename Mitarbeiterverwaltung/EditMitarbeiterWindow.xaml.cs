@@ -24,7 +24,9 @@ namespace Mitarbeiterverwaltung
             this.mitarbeiterService = mitarbeiterService;
             this.abteilungService = abteilungService;
             isTxtboxAbteilungsnameEnabled = false;
+            combobox_abteilung = abteilungService.FillAbteilungDropDown(combobox_abteilung);
         }
+
         /// <summary>
         /// Ereignishandler für den Klick auf den Button zum Speichern von Änderungen.
         /// Überprüft die eingegebenen Daten und führt die Bearbeitung des Mitarbeiters durch.
@@ -34,25 +36,20 @@ namespace Mitarbeiterverwaltung
         private void Button_EditMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
             bool checkFlag = true;
+            string error = "Fehler! Falscher Input für:\n";
+
             mitarbeiter.Vorname = txtbox_vorname.Text;
             mitarbeiter.Nachname = txtbox_nachname.Text;
 
             // Überprüfe Eingabe Abteilung
-            if (!string.IsNullOrEmpty(txtbox_abteilung.Text))
+            if(combobox_abteilung.SelectedItem != null )
             {
-                // Versuche Textbox Abteilung zu int zu konvertieren
-                if (int.TryParse(txtbox_abteilung.Text, out int parsedAbteilung))
+                string selectedItem = ((ComboBoxItem)combobox_abteilung.SelectedItem).Content.ToString();
+
+                if (int.TryParse(selectedItem.Substring(0,1),out int parsedAbteilung))
                 {
                     mitarbeiter.Abteilung = parsedAbteilung;
                 }
-                else
-                {
-                    checkFlag = false;
-                }
-            }
-            else
-            {
-                checkFlag = false;
             }
 
             // Überprüfe Eingabe Parkplatznr
@@ -66,6 +63,7 @@ namespace Mitarbeiterverwaltung
                 else
                 {
                     checkFlag = false;
+                    error += "Parkplatz: Es wird ein leerer Input oder eine Ganzzahl erwartet!\n";
                 }
             }
             else
@@ -81,7 +79,7 @@ namespace Mitarbeiterverwaltung
             }
             else
             {
-                MessageBox.Show("Überprüfen Sie die Eingabe");
+                MessageBox.Show($"{error}");
             }
         }
         /// <summary>
@@ -97,11 +95,11 @@ namespace Mitarbeiterverwaltung
             if (int.TryParse(txtbox_personalnr.Text, out int parsedPersonalNr))
             {
                 mitarbeiter = mitarbeiterService.GetMitarbeiterById(parsedPersonalNr);
-                Abteilung abteilung = abteilungService.GetAbteilungById(parsedPersonalNr);
-
+                
                 // Falls Mitarberiter gefunden
-                if (mitarbeiter.Vorname != null && mitarbeiter.Nachname != null)
+                if (mitarbeiter.Vorname != "" && mitarbeiter.Nachname != "")
                 {
+                    
                     //Aktiviere Abteilungsnamenabgleich
                     isTxtboxAbteilungsnameEnabled = true;
 
@@ -109,15 +107,22 @@ namespace Mitarbeiterverwaltung
                     txtbox_vorname.Text = mitarbeiter.Vorname;
                     txtbox_nachname.Text = mitarbeiter.Nachname;
                     datepicker_geburtstag.SelectedDate = mitarbeiter.Geburtstag;
-                    txtbox_abteilung.Text = mitarbeiter.Abteilung.ToString();
                     txtbox_parkplatznr.Text = mitarbeiter.ParkplatzNr.ToString();
+
+                    foreach(ComboBoxItem item in combobox_abteilung.Items)
+                    {
+                        if (item.Content.ToString().Substring(0,1) == mitarbeiter.Abteilung.ToString())
+                        {
+                            combobox_abteilung.SelectedItem = item;
+                        }
+                    }
 
                     // UI-Elemente aktivieren
                     txtbox_vorname.IsReadOnly = false;
                     txtbox_nachname.IsReadOnly = false;
-                    txtbox_abteilung.IsReadOnly = false;
                     txtbox_parkplatznr.IsReadOnly = false;
                     Button_EditMitarbeiter.IsEnabled = true;
+                    combobox_abteilung.IsEnabled = true;
                 }
                 // Falls kein Mitarbeiter gefunden
                 else
@@ -128,45 +133,7 @@ namespace Mitarbeiterverwaltung
             // Falls Personalnummer kein Integer
             else
             {
-                MessageBox.Show("Ungültige Eingabe!");
-            }
-        }
-        /// <summary>
-        /// Ereignishandler, der ausgelöst wird, wenn sich der Inhalt der Abteilungs-Textbox ändert.
-        /// Aktualisiert den Namen der Abteilung, wenn eine gültige Abteilungsnummer eingegeben wird.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Txtbox_abteilung_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (isTxtboxAbteilungsnameEnabled)
-            {
-                if (int.TryParse(txtbox_abteilung.Text, out int parsedAbteilung))
-                {
-                    Abteilung abteilung = abteilungService.GetAbteilungById(parsedAbteilung);
-                    if (abteilung.Name != null)
-                    {
-                        txtbox_abteilungsname.Text = abteilung.Name;
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Abteilung mit Id {parsedAbteilung} nicht gefunden!");
-                        txtbox_abteilung.Text = mitarbeiter.Abteilung.ToString();
-                    }
-                }
-
-                else
-                {
-                    if (string.IsNullOrEmpty(txtbox_abteilung.Text))
-                    {
-                        txtbox_abteilungsname.Text = "";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ungültige Eingabe!");
-                        txtbox_abteilung.Text = mitarbeiter.Abteilung.ToString();
-                    }
-                }
+                MessageBox.Show("Fehler! Falscher Input für:\nPersonalnummer: Es wird eine Ganzzahl erwartet!");
             }
         }
     }
