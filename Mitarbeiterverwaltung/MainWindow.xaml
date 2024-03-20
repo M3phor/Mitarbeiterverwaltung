@@ -46,19 +46,19 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
-        <Label Name="label_mitarbeiterverwaltung" Grid.Row="1" Grid.Column="1" Content="Mitarbeiterverwaltung"/>
-        <Button Name="btn_mitarbeiteranzeigen" Grid.Row="2" Grid.Column="1" Content="Mitarbeiter anzeigen" Click="btn_MitarbeiterAnzeigen_Click"/>
-        <Button Name="btn_abteilungenanzeigen" Grid.Row="2" Grid.Column="3" Content="Abteilungen anzeigen" Click="btn_AbteilungenAnzeigen_Click"/>
-        <Button Name="btn_parkanzeigen" Grid.Row="2" Grid.Column="5" Content="Parkplätze anzeigen" Click="btn_parkanzeigen_Click"/>
-        <Button Name="btn_exportanzeigen" Grid.Row="2" Grid.Column="7" Content="Exporttabelle anzeigen" Click="btn_ExportAnzeigen_Click"/>
-        <Button Name="btn_addmitarbeiter" Grid.Row="2" Grid.Column="9" Content="Mitarbeiter hinzufügen" Click="btn_Window_AddMitarbeiter_Click"/>
-        <Button Name="btn_editmitarbeiter" Grid.Row="3" Grid.Column="9" Content="Mitarbeiter bearbeiten" Click="btn_EditMitarbeiter_Click" />
-        <Button Name="btn_delmitarbeiter" Grid.Row="4" Grid.Column="9" Content="Mitarbeiter löschen" Click="btn_Window_DelMitarbeiter_Click"  />
-        <Label Name="label_aktuelleruser" Grid.Row="4" Grid.Column="1" Content="Username: "/>
-        <Label Name="label_username" Grid.Row="4" Grid.Column="3"  Content="Username"/>
-        <Label Name="label_aktuelletabelle" Grid.Row="5" Grid.Column="1" Content="Aktuelle Tabelle: "/>
-        <Label Name="label_tabelle" Grid.Row="5" Grid.Column="3"  Content="Tabelle"/>
-        <DataGrid Name="MainDataGrid" Grid.Row="6" Grid.RowSpan="12" Grid.ColumnSpan="9" Grid.Column="1" />
-        <Button Name="btn_export" Grid.Row="19" Grid.Column="9" Content="Tabelle exportieren" Click="btn_Export_Click"/>
+        <Label Name="label_Mitarbeiterverwaltung" Grid.Row="1" Grid.Column="1" Content="Mitarbeiterverwaltung"/>
+        <Button Name="btn_MitarbeiterAnzeigen" Grid.Row="2" Grid.Column="1" Content="Mitarbeiter anzeigen" Click="Btn_MitarbeiterAnzeigen_Click"/>
+        <Button Name="btn_AbteilungenAnzeigen" Grid.Row="2" Grid.Column="3" Content="Abteilungen anzeigen" Click="Btn_AbteilungenAnzeigen_Click"/>
+        <Button Name="btn_ParkplatzAnzeigen" Grid.Row="2" Grid.Column="5" Content="Parkplätze anzeigen" Click="Btn_ParkplatzAnzeigen_Click"/>
+        <Button Name="btn_ExportAnzeigen" Grid.Row="2" Grid.Column="7" Content="Exporttabelle anzeigen" Click="Btn_ExportAnzeigen_Click"/>
+        <Button Name="btn_AddMitarbeiter" Grid.Row="2" Grid.Column="9" Content="Mitarbeiter hinzufügen" Click="Btn_Window_AddMitarbeiter_Click"/>
+        <Button Name="btn_EditMitarbeiter" Grid.Row="3" Grid.Column="9" Content="Mitarbeiter bearbeiten" Click="Btn_EditMitarbeiter_Click" />
+        <Button Name="btn_DelDitarbeiter" Grid.Row="4" Grid.Column="9" Content="Mitarbeiter löschen" Click="Btn_Window_DelMitarbeiter_Click"  />
+        <Label Name="label_AktuellerUser" Grid.Row="4" Grid.Column="1" Content="Username: "/>
+        <Label Name="label_Username" Grid.Row="4" Grid.Column="3"  Content="Username"/>
+        <Label Name="label_AktuelleTabelle" Grid.Row="5" Grid.Column="1" Content="Aktuelle Tabelle: "/>
+        <Label Name="label_Tabelle" Grid.Row="5" Grid.Column="3"  Content="Tabelle"/>
+        <DataGrid Name="mainDataGrid" Grid.Row="6" Grid.RowSpan="12" Grid.ColumnSpan="9" Grid.Column="1" />
+        <Button Name="btn_Export" Grid.Row="19" Grid.Column="9" Content="Tabelle exportieren" Click="Btn_Export_Click"/>
     </Grid>
 </Window>

@@ -25,7 +25,7 @@ namespace Mitarbeiterverwaltung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Login_Click(object sender, RoutedEventArgs e)
+        private void Btn_Login_Click(object sender, RoutedEventArgs e)
         {
 
             // Falls Benutzereingabe valide
@@ -52,7 +52,7 @@ namespace Mitarbeiterverwaltung
         private bool LoginCheck()
         {
             username = txtbox_User.Text;
-            password = PasswordBox_Passwort.Password;
+            password = passbox_Passwort.Password;
 
             // Versuche mit den gegebenen Informationen eine Verbindung zu öffnen, falls erfolgreich -> true
             try

@@ -19,7 +19,7 @@ namespace Mitarbeiterverwaltung
         public MainWindow(string connectionString, string username)
         {
             InitializeComponent();
-            label_username.Content = username;
+            label_Username.Content = username;
 
             // Initialisierung der Services
             mitarbeiterService = new MitarbeiterService(connectionString);
@@ -33,8 +33,8 @@ namespace Mitarbeiterverwaltung
         public void loadDataGridMitarbeiter()
         {
             List<Mitarbeiter> mitarbeiterList = mitarbeiterService.GetAllMitarbeiter();
-            MainDataGrid.ItemsSource = mitarbeiterList;
-            label_tabelle.Content = "Mitarbeiter";
+            mainDataGrid.ItemsSource = mitarbeiterList;
+            label_Tabelle.Content = "Mitarbeiter";
         }
         /// <summary>
         /// Ereignishandler für den Klick auf den Button zum Anzeigen von Mitarbeitern.
@@ -42,7 +42,7 @@ namespace Mitarbeiterverwaltung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_MitarbeiterAnzeigen_Click(object sender, RoutedEventArgs e)
+        private void Btn_MitarbeiterAnzeigen_Click(object sender, RoutedEventArgs e)
         {
             loadDataGridMitarbeiter();
         }
@@ -52,11 +52,11 @@ namespace Mitarbeiterverwaltung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_AbteilungenAnzeigen_Click(object sender, RoutedEventArgs e)
+        private void Btn_AbteilungenAnzeigen_Click(object sender, RoutedEventArgs e)
         {
             List<Abteilung> abteilungList = abteilungService.GetAllAbteilungen();
-            MainDataGrid.ItemsSource = abteilungList;
-            label_tabelle.Content = "Abteilungen";
+            mainDataGrid.ItemsSource = abteilungList;
+            label_Tabelle.Content = "Abteilungen";
         }
         /// <summary>
         /// Ereignishandler für den Klick auf den Button zum Anzeigen von Parkplätzen.
@@ -64,11 +64,11 @@ namespace Mitarbeiterverwaltung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_parkanzeigen_Click(object sender, RoutedEventArgs e)
+        private void Btn_ParkplatzAnzeigen_Click(object sender, RoutedEventArgs e)
         {
             List<Parkplatz> parkplatzList = parkplatzService.GetAllParkplaetze();
-            MainDataGrid.ItemsSource = parkplatzList;
-            label_tabelle.Content = "Parkplätze";
+            mainDataGrid.ItemsSource = parkplatzList;
+            label_Tabelle.Content = "Parkplätze";
         }
         /// <summary>
         /// Ereignishandler für den Klick auf den Button zum Anzeigen der Exportdaten.
@@ -78,7 +78,7 @@ namespace Mitarbeiterverwaltung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_ExportAnzeigen_Click(object sender, RoutedEventArgs e)
+        private void Btn_ExportAnzeigen_Click(object sender, RoutedEventArgs e)
         {
             List<Mitarbeiter> mitarbeiterList = mitarbeiterService.GetAllMitarbeiter();
             List<MitarbeiterGesamt> mitarbeiterGesamtList = new List<MitarbeiterGesamt>();
@@ -104,8 +104,8 @@ namespace Mitarbeiterverwaltung
                 }
                 mitarbeiterGesamtList.Add(mitarbeiterGesamt);
             }
-            MainDataGrid.ItemsSource = mitarbeiterGesamtList;
-            label_tabelle.Content = "Export Tabelle";
+            mainDataGrid.ItemsSource = mitarbeiterGesamtList;
+            label_Tabelle.Content = "Export Tabelle";
         }
         /// <summary>
         /// Ereignishandler für den Klick auf den Button zum Hinzufügen eines Mitarbeiters.
@@ -113,9 +113,9 @@ namespace Mitarbeiterverwaltung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_Window_AddMitarbeiter_Click(object sender, RoutedEventArgs e)
+        private void Btn_Window_AddMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
-            AddMitarbeiterWindow addMitarbeiterWindow = new AddMitarbeiterWindow(mitarbeiterService);
+            AddMitarbeiterWindow addMitarbeiterWindow = new AddMitarbeiterWindow(mitarbeiterService, abteilungService);
             addMitarbeiterWindow.Owner = this;
             addMitarbeiterWindow.ShowDialog();
             loadDataGridMitarbeiter();
@@ -126,7 +126,7 @@ namespace Mitarbeiterverwaltung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_EditMitarbeiter_Click(object sender, RoutedEventArgs e)
+        private void Btn_EditMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
             EditMitarbeiterWindow editMitarbeiterWindow = new EditMitarbeiterWindow(mitarbeiterService, abteilungService);
             editMitarbeiterWindow.Owner = this;
@@ -139,7 +139,7 @@ namespace Mitarbeiterverwaltung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_Window_DelMitarbeiter_Click(object sender, RoutedEventArgs e)
+        private void Btn_Window_DelMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
             DelMitarbeiterWindow delMitarbeiterWindow = new DelMitarbeiterWindow(mitarbeiterService);
             delMitarbeiterWindow.Owner = this;
@@ -152,7 +152,7 @@ namespace Mitarbeiterverwaltung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_Export_Click(object sender, RoutedEventArgs e)
+        private void Btn_Export_Click(object sender, RoutedEventArgs e)
         {
             mitarbeiterService.ExportMitarbeiter();
         }

@@ -28,8 +28,8 @@
         <Label   Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Content="Loginname:"/>
         <TextBox Grid.Row="3" Grid.Column="2" Text="" Name="txtbox_User"/>
         <Label   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Content="Passwort:"/>
-        <PasswordBox Grid.Row="4" Grid.Column="2" Name="PasswordBox_Passwort"/>
-        <Button Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Name="btn_login" Content="Login" Click="Button_Login_Click"/>
+        <PasswordBox Grid.Row="4" Grid.Column="2" Name="passbox_Passwort"/>
+        <Button Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Name="btn_Login" Content="Login" Click="Btn_Login_Click"/>
     </Grid>
 
 

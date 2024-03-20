@@ -31,9 +31,9 @@
         <Label   Grid.Row="3" Grid.Column="1" Content="Geburtstag" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <DatePicker Grid.Row="3" Grid.Column="2" Name="datepicker_geburtstag" />
         <Label   Grid.Row="4" Grid.Column="1" Content="Abteilung" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="4" Grid.Column="2" Text="..." Name="txtbox_abteilung"/>
+        <ComboBox Grid.Row="4" Grid.Column="2" Name="combobox_abteilung"/>
         <Label   Grid.Row="5" Grid.Column="1" Content="Parkplatznummer" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <TextBox Grid.Row="5" Grid.Column="2" Text="..." Name="txtbox_parkplatznr"/>
-        <Button Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Name="Button_AddMitarbeiter" Content="Mitarbeiter hinzufügen" Click="Button_AddMitarbeiter_Click"/>
+        <Button Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Name="btn_AddMitarbeiter" Content="Mitarbeiter hinzufügen" Click="Btn_AddMitarbeiter_Click"/>
  </Grid>
 </Window>

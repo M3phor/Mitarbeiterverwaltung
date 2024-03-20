@@ -47,7 +47,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {
@@ -94,7 +94,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {
@@ -120,7 +120,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {
@@ -153,7 +153,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {
@@ -167,7 +167,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
         public void ExportMitarbeiter()
         {
             //List, weil deren Größe (im gegensatz zum Array) dynamisch angepasst werden kann, zudem Methoden wie .Add(), .Remove() etc.
-            List<object> exporteddata = new List<object>();
+            List<object> exportedData = new List<object>();
 
             // ToDo: Path dynmaisch anpassen
             string path = "C:\\Users\\UCD3FE\\Export\\";
@@ -175,26 +175,30 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
             try
             {
-
                 connection.Open();
                 string query = "SELECT mitarbeiter.personalnummer as personalnummer, mitarbeiter.vorname, mitarbeiter.nachname, mitarbeiter.geburtstag, abteilung.name as abteilung, abteilung.kostenstelle, parkplatz.parkplatznr, parkplatz.schatten as parkplatzschatten, parkplatz.stockwerk as parkplatzstockwerk from mitarbeiter LEFT JOIN abteilung on mitarbeiter.abteilung = abteilung.id LEFT JOIN parkplatz on mitarbeiter.parkplatznr = parkplatz.parkplatznr";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                var reader = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    //string weil die keys strings sind; object weil die values verschiedene Datentypen sind, so können alle abgebildet werden
-                    var rowData = new Dictionary<string, object>();
-
-                    for (int i = 0; i < reader.FieldCount; i++)
+                    var rowData = new
                     {
-                        rowData[reader.GetName(i)] = reader.GetValue(i);
-                    }
+                        personalnummer = reader["personalnummer"],
+                        vorname = reader["vorname"],
+                        nachname = reader["nachname"],
+                        geburtstag = reader["geburtstag"],
+                        abteilung = reader["abteilung"],
+                        kostenstelle = reader["kostenstelle"],
+                        parkplatznr = reader["parkplatznr"],
+                        parkplatzschatten = reader["parkplatzschatten"],
+                        parkplatzstockwerk = reader["parkplatzstockwerk"]
+                    };
 
-                    exporteddata.Add(rowData);
+                    exportedData.Add(rowData);
                 }
 
-                string jsondata = JsonConvert.SerializeObject(exporteddata, Formatting.Indented);
+                string jsondata = JsonConvert.SerializeObject(exportedData, Formatting.Indented);
                 File.WriteAllText(path + filename, jsondata);
 
                 Console.WriteLine("daten wurden erfolgreich als json exportiert.");
@@ -203,7 +207,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {
@@ -232,7 +236,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {
@@ -266,7 +270,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {
@@ -304,7 +308,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {
@@ -344,7 +348,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {
@@ -378,7 +382,7 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
 
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {

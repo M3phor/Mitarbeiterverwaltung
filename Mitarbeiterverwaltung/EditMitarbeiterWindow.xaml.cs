@@ -10,7 +10,6 @@ namespace Mitarbeiterverwaltung
         private MitarbeiterService mitarbeiterService;
         private AbteilungService abteilungService;
         private Mitarbeiter mitarbeiter;
-        private bool isTxtboxAbteilungsnameEnabled;
 
         /// <summary>
         /// Konstruktor der EditMitarbeiterWindow-Klasse.
@@ -23,8 +22,7 @@ namespace Mitarbeiterverwaltung
             InitializeComponent();
             this.mitarbeiterService = mitarbeiterService;
             this.abteilungService = abteilungService;
-            isTxtboxAbteilungsnameEnabled = false;
-            combobox_abteilung = abteilungService.FillAbteilungDropDown(combobox_abteilung);
+            combobox_abteilung = this.abteilungService.FillAbteilungDropDown(combobox_abteilung);
         }
 
         /// <summary>
@@ -100,9 +98,6 @@ namespace Mitarbeiterverwaltung
                 if (mitarbeiter.Vorname != "" && mitarbeiter.Nachname != "")
                 {
                     
-                    //Aktiviere Abteilungsnamenabgleich
-                    isTxtboxAbteilungsnameEnabled = true;
-
                     // Textboxen mit Inhalt füllen
                     txtbox_vorname.Text = mitarbeiter.Vorname;
                     txtbox_nachname.Text = mitarbeiter.Nachname;

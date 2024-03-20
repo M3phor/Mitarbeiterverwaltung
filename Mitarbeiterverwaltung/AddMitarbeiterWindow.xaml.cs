@@ -1,22 +1,26 @@
 ﻿using Mitarbeiterverwaltung.Objects;
 using Mitarbeiterverwaltung.Services;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Mitarbeiterverwaltung
 {
     public partial class AddMitarbeiterWindow : Window
     {
         private MitarbeiterService mitarbeiterService;
+        private AbteilungService abteilungService;
 
         /// <summary>
         /// Konstruktor der AddMitarbeiterWindow-Klasse.
         /// Initialisiert das Fenster und die zugehörigen Service-Objekte.
         /// </summary>
         /// <param name="mitarbeiterService">Ein Objekt des Typs MitarbeiterService, das für die Kommunikation mit der Datenbank für Mitarbeiter zuständig ist.</param>
-        public AddMitarbeiterWindow(MitarbeiterService mitarbeiterService)
+        public AddMitarbeiterWindow(MitarbeiterService mitarbeiterService, AbteilungService abteilungService)
         {
             InitializeComponent();
             this.mitarbeiterService = mitarbeiterService;
+            this.abteilungService = abteilungService;
+            combobox_abteilung = this.abteilungService.FillAbteilungDropDown(combobox_abteilung);
         }
         /// <summary>
         /// Ereignishandler für den Klick auf den Button zum Hinzufügen eines Mitarbeiters.
@@ -26,7 +30,7 @@ namespace Mitarbeiterverwaltung
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_AddMitarbeiter_Click(object sender, RoutedEventArgs e)
+        private void Btn_AddMitarbeiter_Click(object sender, RoutedEventArgs e)
         {
             // ToDo: Eingabefehler abfangen:    - Namen?
             //                                  - Geburtstag
@@ -57,23 +61,14 @@ namespace Mitarbeiterverwaltung
                 }
             }
 
-            // Textbox Abteilung nicht null oder leer
-            if (!string.IsNullOrEmpty(txtbox_abteilung.Text))
+            if (combobox_abteilung.SelectedItem != null)
             {
-                if (int.TryParse(txtbox_abteilung.Text, out int abteilung))
+                string selectedItem = ((ComboBoxItem)combobox_abteilung.SelectedItem).Content.ToString();
+
+                if (int.TryParse(selectedItem.Substring(0, 1), out int parsedAbteilung))
                 {
-                    mitarbeiter.Abteilung = abteilung;
+                    mitarbeiter.Abteilung = parsedAbteilung;
                 }
-                else
-                {
-                    checkFlag = false;
-                    error += "Abteilung: Es wird eine Ganzzahl erwartet!\n";
-                }
-            }
-            else
-            {
-                checkFlag = false;
-                error += "Abteilung: Das Feld darf nicht leer sein!\n";
             }
 
             if (checkFlag)
