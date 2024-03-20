@@ -170,9 +170,11 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
             List<object> exportedData = new List<object>();
 
             // ToDo: Path dynmaisch anpassen
-            string path = "C:\\Users\\UCD3FE\\Export\\";
+            string benutzerPfad = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             string filename = $"db_export_{DateTime.Now:yyyyMMdd}.json";
 
+            string speicherort = Path.Combine(benutzerPfad, "Desktop", filename);
+            
             try
             {
                 connection.Open();
@@ -199,10 +201,10 @@ namespace Mitarbeiterverwaltung.DatabaseAccessObject
                 }
 
                 string jsondata = JsonConvert.SerializeObject(exportedData, Formatting.Indented);
-                File.WriteAllText(path + filename, jsondata);
+                File.WriteAllText(speicherort, jsondata);
 
-                Console.WriteLine("daten wurden erfolgreich als json exportiert.");
-                MessageBox.Show($"alle Mitarbeiterdaten wurden als {filename} exportiert nach: {path}");
+                Console.WriteLine("Daten wurden erfolgreich als json exportiert.");
+                MessageBox.Show($"Alle Mitarbeiterdaten wurden exportiert nach: {speicherort}");
 
             }
             catch (Exception ex)
